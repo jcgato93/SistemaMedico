@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ServicioMedicoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CatalogoDocumento">
+    <Key>
+      <PropertyRef Name="CatalogoDocumento_Id" />
+    </Key>
+    <Property Name="CatalogoDocumento_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreDocumento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Url_Documetno" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Url_Destino" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Consultas">
+    <Key>
+      <PropertyRef Name="Consultas_Id" />
+    </Key>
+    <Property Name="Consultas_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Paciente_Id" Type="Int32" Nullable="false" />
+    <Property Name="EPS_Id" Type="Int32" />
+    <Property Name="Cargo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Empresa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Fecha_Consulta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Tipo_de_Examen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Estado_Civil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Calificacion_Medica" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="EPS" Relationship="Self.FK_Consultas_EPS" FromRole="Consultas" ToRole="EPS" />
+    <NavigationProperty Name="Paciente" Relationship="Self.FK_Consultas_Paciente" FromRole="Consultas" ToRole="Paciente" />
+    <NavigationProperty Name="Prescripciones" Relationship="Self.FK_Prescripciones_Consultas" FromRole="Consultas" ToRole="Prescripciones" />
+  </EntityType>
+  <EntityType Name="EPS">
+    <Key>
+      <PropertyRef Name="EPS_Id" />
+    </Key>
+    <Property Name="EPS_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre_EPS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Consultas" Relationship="Self.FK_Consultas_EPS" FromRole="EPS" ToRole="Consultas" />
+  </EntityType>
+  <EntityType Name="Paciente">
+    <Key>
+      <PropertyRef Name="Paciente_Id" />
+    </Key>
+    <Property Name="Paciente_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PrimerNombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SegundoNombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ApellidoPaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ApellidoMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Tipo_de_Documento" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="Numero_de_Documento" Type="Int64" Nullable="false" />
+    <Property Name="Telefono" Type="Int64" />
+    <Property Name="Celular" Type="Int64" />
+    <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DOB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Genero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="RH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Consultas" Relationship="Self.FK_Consultas_Paciente" FromRole="Paciente" ToRole="Consultas" />
+  </EntityType>
+  <EntityType Name="Prescripciones">
+    <Key>
+      <PropertyRef Name="Prescripciones_Id" />
+    </Key>
+    <Property Name="Prescripciones_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Consultas_Id" Type="Int32" />
+    <Property Name="Nombre_Documento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Url_Documento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="fecha_Generado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Json_Consulta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Consultas" Relationship="Self.FK_Prescripciones_Consultas" FromRole="Prescripciones" ToRole="Consultas" />
+  </EntityType>
+  <EntityType Name="Rol">
+    <Key>
+      <PropertyRef Name="Rol_Id" />
+    </Key>
+    <Property Name="Rol_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK_User_Rol" FromRole="Rol" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="Status_Id" />
+    </Key>
+    <Property Name="Status_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK_User_Status" FromRole="Status" ToRole="User" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="User_Id" />
+    </Key>
+    <Property Name="User_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SessionId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Rol_Id" Type="Int32" />
+    <Property Name="Status_Id" Type="Int32" />
+    <NavigationProperty Name="Rol" Relationship="Self.FK_User_Rol" FromRole="User" ToRole="Rol" />
+    <NavigationProperty Name="Status" Relationship="Self.FK_User_Status" FromRole="User" ToRole="Status" />
+  </EntityType>
+  <Association Name="FK_Consultas_EPS">
+    <End Role="EPS" Type="Self.EPS" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Consultas" Type="Self.Consultas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EPS">
+        <PropertyRef Name="EPS_Id" />
+      </Principal>
+      <Dependent Role="Consultas">
+        <PropertyRef Name="EPS_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Consultas_Paciente">
+    <End Role="Paciente" Type="Self.Paciente" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Consultas" Type="Self.Consultas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Paciente">
+        <PropertyRef Name="Paciente_Id" />
+      </Principal>
+      <Dependent Role="Consultas">
+        <PropertyRef Name="Paciente_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Prescripciones_Consultas">
+    <End Role="Consultas" Type="Self.Consultas" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Prescripciones" Type="Self.Prescripciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Consultas">
+        <PropertyRef Name="Consultas_Id" />
+      </Principal>
+      <Dependent Role="Prescripciones">
+        <PropertyRef Name="Consultas_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="Rol_Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="Rol_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="Status_Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="Status_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ServicioMedicoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CatalogoDocumento" EntityType="Self.CatalogoDocumento" />
+    <EntitySet Name="Consultas" EntityType="Self.Consultas" />
+    <EntitySet Name="EPS" EntityType="Self.EPS" />
+    <EntitySet Name="Paciente" EntityType="Self.Paciente" />
+    <EntitySet Name="Prescripciones" EntityType="Self.Prescripciones" />
+    <EntitySet Name="Rol" EntityType="Self.Rol" />
+    <EntitySet Name="Status" EntityType="Self.Status" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="User" EntityType="Self.User" />
+    <AssociationSet Name="FK_Consultas_EPS" Association="Self.FK_Consultas_EPS">
+      <End Role="EPS" EntitySet="EPS" />
+      <End Role="Consultas" EntitySet="Consultas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Consultas_Paciente" Association="Self.FK_Consultas_Paciente">
+      <End Role="Paciente" EntitySet="Paciente" />
+      <End Role="Consultas" EntitySet="Consultas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Prescripciones_Consultas" Association="Self.FK_Prescripciones_Consultas">
+      <End Role="Consultas" EntitySet="Consultas" />
+      <End Role="Prescripciones" EntitySet="Prescripciones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Rol" Association="Self.FK_User_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Status" Association="Self.FK_User_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
